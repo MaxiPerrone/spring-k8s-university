@@ -35,7 +35,14 @@ services:
     image: maximilianop23/users:latest
     ports:
       - "8001:8001"
-    env_file: ./users/.env
+    #env_file: ./users/.env
+    environment:
+      PORT: 8001
+      DB_HOST: mysql8:3306
+      DB_DATABASE: users
+      DB_USERNAME: root
+      DB_PASSWORD: sasa
+      COURSES_URL: courses:8002
     networks:
       - spring
     depends_on:
@@ -50,8 +57,15 @@ services:
     image: maximilianop23/courses:latest
     ports:
       - "8002:8002"
-    env_file:
-      - ./courses/.env
+    #env_file:
+    #  - ./courses/.env
+    environment:
+      PORT: 8002
+      DB_HOST: postgres14:5432
+      DB_DATABASE: courses
+      DB_USERNAME: postgres
+      DB_PASSWORD: sasa
+      USERS_URL: users:8001
     networks:
       - spring
     depends_on:
